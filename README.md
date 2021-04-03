@@ -8,7 +8,7 @@ A fiddling wrapper over the standard, beautiful random package. The main purpose
 I guess these files will never be uploaded to PyPI: install locally with 
 
 ```shell
-$ git pull https://github.com/squillero/randy
+$ git clone https://github.com/squillero/randy
 $ cd randy
 $ pip3 install -e src
 ```
@@ -16,4 +16,4 @@ $ pip3 install -e src
 ### Licence
 
 Copyright © 2021 Giovanni Squillero  
-Randy is free and open-source software, and it is distributed under a permissive MIT License.
+Randy is [free and open-source software](https://en.wikipedia.org/wiki/Free_and_open-source_software), and it is distributed under a permissive [MIT License](https://tldrlegal.com/license/mit-license).
