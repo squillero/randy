@@ -56,8 +56,8 @@ setuptools.setup(
     },
     keywords="optimization evolutionary-algorithm computational-intelligence",
     packages=setuptools.find_packages(),
-    package_data={'': ['requirements.txt', 'README.md']},
-    data_files=[('.', ['requirements.txt', 'README.md'])],
+    package_data={'': ['requirements.txt', '../README.md']},
+    data_files=[('.', ['requirements.txt', '../README.md'])],
     classifiers=[
         "Programming Language :: Python :: 3", "Operating System :: OS Independent",
         "Development Status :: 2 - Pre-Alpha", "Intended Audience :: Science/Research",
