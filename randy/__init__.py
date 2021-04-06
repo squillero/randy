@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-#  , __
-# /|/  \                  |
-#  |___/  __,   _  _    __|
-#  | \   /  |  / |/ |  /  |  |   |
-#  |  \_/\_/|_/  |  |_/\_/|_/ \_/|/
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ /| ~
-#                               \|
+# ______________   ________   __
+# |____/|____|| \  ||    \ \_/
+# |R  \_|A   ||N \_||D___/  |Y
+#
+#   @..@    古池や
+#  (----)    蛙飛び込む
+# ( >__< )    水の音
 #
 # Copyright (c) 2021 Giovanni Squillero.
 #
@@ -27,6 +27,4 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-
-def test_test():
-    assert True
+from .wrapper import Randy
