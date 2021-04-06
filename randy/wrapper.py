@@ -3,9 +3,9 @@
 # |____/|____|| \  ||    \ \_/
 # |R  \_|A   ||N \_||D___/  |Y
 #
-#   @..@    古池や
-#  (----)    蛙飛び込む
-# ( >__< )    水の音
+#    @..@    古池や
+#   (----)    蛙飛び込む
+#  ( >__< )    水の音
 #
 # Copyright (c) 2021 Giovanni Squillero.
 #
@@ -27,7 +27,7 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-from typing import Optional, Sequence, Any, Collection, List, Tuple
+from typing import Optional, Sequence, Any
 import warnings
 import math
 import random
@@ -55,7 +55,7 @@ class Randy:
         """Stretches [0,1] on a standard deviation ]0, 20.8[."""
 
         assert 0 <= strength <= 1, "Invalid sigma (must be [0, 1])"
-        x = (1 - strength) / 2 + .5
+        x = strength / 2 + .5
         x = min(x, 1 - Randy.SMALL_NUMBER)
 
         val = math.log(x / (1 - x))
@@ -63,21 +63,29 @@ class Randy:
             val = Randy.SMALL_NUMBER
         return val
 
-    def sigma_random(self, a, b, loc: Optional[float] = None, strength: Optional[float] = None):
-        """Returns a random value in [a, b] biased toward loc with a given strength."""
+    def sigma_random(self, a: float, b: float, loc: Optional[float] = None, strength: Optional[float] = None):
+        """Returns a value in [a, b] by perturbating loc with a given strength."""
 
-        assert 0 <= strength <= 1, "strength must be in [0, 1]"
+        assert a <= b, "a must precede b"
+        assert strength is None or 0 <= strength <= 1, "strength must be in [0, 1]"
         assert (loc is None and strength is None) or (
             loc is not None and
             strength is not None), "loc and strength should be specified together (either both or neither)"
         assert loc is None or a <= loc <= b, "loc must be in [a, b]"
 
-        std = Randy._strength_to_sigma(strength)
-        clip_a, clip_b = (a - loc) / std, (b - loc) / std
-        return truncnorm.rvs(clip_a, clip_b, loc=loc, scale=std, random_state=self._generator)
+        if strength is None:
+            val = self._generator.random()
+            val = val * (b - a) + a
+        elif strength == 0:
+            val = loc
+        else:
+            std = Randy._strength_to_sigma(strength)
+            clip_a, clip_b = (a - loc) / std, (b - loc) / std
+            val = truncnorm.rvs(clip_a, clip_b, loc=loc, scale=std, random_state=self._generator)
+        return val
 
     def sigma_choice(self, seq: Sequence[Any], loc: Optional[int] = None, strength: Optional[float] = None):
-        """Returns a random element from seq biased toward the index loc with a given strength."""
+        """Returns a random element from seq by perturbating index loc with a given strength."""
 
         assert strength is None or 0 <= strength <= 1, "strength must be in [0, 1]"
         assert (loc is None and strength is None) or (
@@ -85,16 +93,16 @@ class Randy:
             strength is not None), "loc and strength should be specified together (either both or neither)"
         assert loc is None or 0 <= loc < len(seq), "loc must be a valid index of seq"
 
-        if strength == 0 or strength is None:
+        if strength == 1 or strength is None:
             return self._generator.choice(seq)
-        elif strength == 1:
+        elif strength == 0:
             return seq[loc]
         else:
             i = self.sigma_random(0, len(seq)-Randy.SMALL_NUMBER, loc=loc+.5, strength=strength)
             return seq[int(i)]
 
     def boolean(self, p_true: Optional[float] = None, p_false: Optional[float] = None):
-        """"""
+        """Returns a boolean value with the given probability."""
 
         assert p_true is None or p_false is None, "p_true and p_false cannot be both spedified."
         assert p_true is None or 0 <= p_true <= 1, "p_true must be on [0, 1]."
