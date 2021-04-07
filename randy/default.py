@@ -27,29 +27,31 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
+__all__ = ['boolean', 'choice', 'random', 'sigma_choice', 'sigma_random']
+
 from .core import Randy
 
-__all__ = ['sigma_random', 'random', 'sigma_choice', 'choice', 'boolean']
 
-
-_the_ram = Randy(42)
-
-
-def sigma_random(*args, **kwargs):
-    return _the_ram.sigma_random(*args, **kwargs)
-
-
-def random(*args, **kwargs):
-    return _the_ram.random(*args, **kwargs)
-
-
-def sigma_choice(*args, **kwargs):
-    return _the_ram.sigma_choice(*args, **kwargs)
-
-
-def choice(*args, **kwargs):
-    return _the_ram.choice(*args, **kwargs)
+__the_ram = Randy(42)
 
 
 def boolean(*args, **kwargs):
-    return _the_ram.boolean(*args, **kwargs)
+    return __the_ram.boolean(*args, **kwargs)
+
+
+def choice(*args, **kwargs):
+    return __the_ram.choice(*args, **kwargs)
+
+
+def random(*args, **kwargs):
+    return __the_ram.random(*args, **kwargs)
+
+
+def sigma_choice(*args, **kwargs):
+    return __the_ram.sigma_choice(*args, **kwargs)
+
+
+def sigma_random(*args, **kwargs):
+    return __the_ram.sigma_random(*args, **kwargs)
+
+
