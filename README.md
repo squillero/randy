@@ -1,3 +1,7 @@
+[![DOI](https://zenodo.org/badge/354226427.svg)](https://zenodo.org/badge/latestdoi/354226427)
+
+[![xx](/github/go-mod/go-version/:user/:repo))
+
 RANDY
 =====
 
