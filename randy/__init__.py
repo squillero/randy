@@ -27,6 +27,9 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
+__version__ = '0.1β'
+__author__ = 'Giovanni Squillero'
+
 from .core import Randy
 from .default import *
 
