@@ -44,5 +44,5 @@ val = truncnorm.rvs(-2, 2, loc=0, scale=.5)
     rtimes = timeit.repeat(stmt=RANDY_CODE, repeat=10, number=10000, globals={'the_ram': the_ram})
     stimes = timeit.repeat(stmt=SCIPY_CODE, repeat=10, number=10000, globals={'truncnorm': truncnorm})
 
-    overhead = 100 * (sum(stimes) - sum(rtimes)) / sum(stimes)
+    overhead = 100 * (sum(rtimes) - sum(stimes)) / sum(stimes)
     print(f"Ovrhead on scipy's truncnorm: {overhead:.2f}%")
