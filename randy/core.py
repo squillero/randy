@@ -30,7 +30,7 @@
 from typing import Optional, Sequence, Any
 import warnings
 import math
-import random
+import logging
 import numpy as np
 from scipy.stats import truncnorm
 
@@ -40,7 +40,8 @@ class Randy:
 
     SMALL_NUMBER = 1e-9
 
-    def __init__(self, seed: Optional = 42) -> None:
+    def __init__(self, seed: Optional[Any] = 42) -> None:
+        logging.debug(f"Created new Randy({seed})")
         self._generator = np.random.default_rng(seed)
         self._calls = 0
 
@@ -66,6 +67,7 @@ class Randy:
     def sigma_random(self, a: float, b: float, loc: Optional[float] = None, strength: Optional[float] = None):
         """Returns a value in [a, b] by perturbating loc with a given strength."""
 
+        self._calls += 1
         assert a <= b, "a must precede b"
         assert strength is None or 0 <= strength <= 1, "strength must be in [0, 1]"
         assert (loc is None and strength is None) or (
@@ -84,9 +86,14 @@ class Randy:
             val = truncnorm.rvs(clip_a, clip_b, loc=loc, scale=std, random_state=self._generator)
         return val
 
+    def random(self, a: Optional[float] = 0, b: Optional[float] = 1):
+        """Returns a random value in [a, b], default.py is [0, 1]."""
+        return self.sigma_random(a=a, b=b, loc=None, strength=None)
+
     def sigma_choice(self, seq: Sequence[Any], loc: Optional[int] = None, strength: Optional[float] = None):
         """Returns a random element from seq by perturbating index loc with a given strength."""
 
+        self._calls += 1
         assert strength is None or 0 <= strength <= 1, "strength must be in [0, 1]"
         assert (loc is None and strength is None) or (
             loc is not None and
@@ -101,9 +108,14 @@ class Randy:
             i = self.sigma_random(0, len(seq)-Randy.SMALL_NUMBER, loc=loc+.5, strength=strength)
             return seq[int(i)]
 
+    def choice(self, seq: Sequence[Any]):
+        """Returns a random element from seq"""
+        return self.sigma_choice(seq, loc=None, strength=None)
+
     def boolean(self, p_true: Optional[float] = None, p_false: Optional[float] = None):
         """Returns a boolean value with the given probability."""
 
+        self._calls += 1
         assert p_true is None or p_false is None, "p_true and p_false cannot be both spedified."
         assert p_true is None or 0 <= p_true <= 1, "p_true must be on [0, 1]."
         assert p_false is None or 0 <= p_false <= 1, "p_false must be on [0, 1]."
