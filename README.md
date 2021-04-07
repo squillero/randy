@@ -1,3 +1,9 @@
+![LANGUAGE](https://img.shields.io/badge/language-python3-blue)
+[![LICENSE](https://img.shields.io/github/license/squillero/randy)](LICENSE)
+![SIZE](https://img.shields.io/github/languages/code-size/squillero/randy)
+![RELEASE](https://img.shields.io/github/v/release/squillero/randy?include_prereleases)
+[![DOI](https://zenodo.org/badge/354226427.svg)](https://zenodo.org/badge/latestdoi/354226427)
+
 RANDY
 =====
 
@@ -11,7 +17,7 @@ I guess these files will never be uploaded to PyPI: install locally with somethi
 
 ```shell
 $ git clone https://github.com/squillero/randy
-$ cd randy
+$ cd randyc
 $ python3 setup.py install
 ```
 
