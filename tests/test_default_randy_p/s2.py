@@ -26,3 +26,15 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
+
+import randy
+
+
+def t2():
+    x = 0
+    x += randy.random()
+
+    import randy as r
+    x += r.randint(10, 100)
+
+    return x

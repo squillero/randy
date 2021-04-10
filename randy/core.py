@@ -41,7 +41,8 @@ class Randy:
     SMALL_NUMBER = 1e-9
 
     def __init__(self, seed: Optional[Any] = 42) -> None:
-        logging.debug(f"Created new Randy({seed})")
+        if seed is None:
+            warnings.warn("Initializing Randy with entropy from the OS: results will not be reproducible.", RuntimeWarning, stacklevel=2)
         self._generator = np.random.default_rng(seed)
         self._calls = 0
 
@@ -50,6 +51,13 @@ class Randy:
         warnings.warn("Setting a seed is deprecated. Create a new RandomWrapper instead.", DeprecationWarning)
         self._generator = np.random.default_rng(seed)
         self._calls = 0
+
+    def __str__(self) -> str:
+        descr = ', '.join(f"{a}={b!r}" for a, b in self._generator.__getstate__().items())
+        return f"Randy @ {hex(id(self))} (calls={self._calls}, {descr})"
+
+    def __repr__(self) -> str:
+        return f"Randy_{hex(id(self))[2:]}"
 
     @staticmethod
     def _strength_to_sigma(strength: float):
@@ -87,10 +95,10 @@ class Randy:
         return val
 
     def random(self, a: Optional[float] = 0, b: Optional[float] = 1):
-        """Returns a random value in [a, b], default.py is [0, 1]."""
+        """Returns a random value in [a, b], default is [0, 1]."""
         return self.sigma_random(a=a, b=b, loc=None, strength=None)
 
-    def sigma_choice(self, seq: Sequence[Any], loc: Optional[int] = None, strength: Optional[float] = None):
+    def sigma_choice(self, seq: Sequence[Any], loc: Optional[int] = None, strength: Optional[float] = None) -> Any:
         """Returns a random element from seq by perturbating index loc with a given strength."""
 
         self._calls += 1
@@ -126,3 +134,12 @@ class Randy:
             p_true = 1-p_false
 
         return self._generator.random() < p_true
+
+    def randint(self, a, b):
+        """Returns a random integer in [a, b]."""
+        assert a <= b, "a must be <= b."
+        r = self._generator.random() * (b - a + 1) + a
+        return int(r)
+
+    def shuffle(self, seq: Sequence[Any]) -> None:
+        self._generator.shuffle(seq)

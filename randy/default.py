@@ -27,31 +27,57 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-__all__ = ['boolean', 'choice', 'random', 'sigma_choice', 'sigma_random']
+__all__ = ['boolean', 'choice', 'random', 'sigma_choice', 'sigma_random', 'randint', 'shuffle']
 
+import logging
 from .core import Randy
 
-
-__the_ram = Randy(42)
+try:
+    # Ok, I may admit that that'test_default_randy_p a little bit paranoid...
+    __the_ram
+    assert False, f"Randy the Ram already initialized: {__the_ram!r}"
+except NameError:
+    __the_ram = Randy(42)
+    logging.debug(f"Initialized Randy the Ram: {__the_ram!r}")
 
 
 def boolean(*args, **kwargs):
+    """Call boolean with the default random generator."""
+    logging.debug(f"Using Randy the Ram ({__the_ram!r})")
     return __the_ram.boolean(*args, **kwargs)
 
 
 def choice(*args, **kwargs):
+    """Call choice with the default random generator."""
+    logging.debug(f"Using Randy the Ram ({__the_ram!r})")
     return __the_ram.choice(*args, **kwargs)
 
 
 def random(*args, **kwargs):
+    """Call random with the default random generator."""
+    logging.debug(f"Using Randy the Ram ({__the_ram!r})")
     return __the_ram.random(*args, **kwargs)
 
 
 def sigma_choice(*args, **kwargs):
+    """Call sigma_choice with the default random generator."""
+    logging.debug(f"Using Randy the Ram ({__the_ram!r})")
     return __the_ram.sigma_choice(*args, **kwargs)
 
 
 def sigma_random(*args, **kwargs):
+    """Call sigma_random with the default random generator."""
+    logging.debug(f"Using Randy the Ram ({__the_ram!r})")
     return __the_ram.sigma_random(*args, **kwargs)
 
 
+def randint(*args, **kwargs):
+    """Call randint with the default random generator."""
+    logging.debug(f"Using Randy the Ram ({__the_ram!r})")
+    return __the_ram.randint(*args, **kwargs)
+
+
+def shuffle(*args, **kwargs):
+    """Call shuffle with the default random generator."""
+    logging.debug(f"Using Randy the Ram ({__the_ram!r})")
+    return __the_ram.shuffle(*args, **kwargs)
