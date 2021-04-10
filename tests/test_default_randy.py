@@ -25,4 +25,28 @@
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-# IN THE SOFTWARE.
+# IN THE SOFTWARE
+
+import re
+from io import StringIO
+import logging
+
+import test_default_randy_p
+
+
+def main():
+    log_stream = StringIO()
+    logging.getLogger().setLevel(logging.DEBUG)
+    logging.getLogger().addHandler(logging.StreamHandler(stream=log_stream))
+
+    test_default_randy_p.t1()
+    test_default_randy_p.t2()
+    x = log_stream.getvalue()
+
+    randies = re.findall(r'Randy_[abcdef0-9]+', log_stream.getvalue())
+    assert randies, "Logging failed"
+    assert all(r == randies[0] for r in randies), "All Randies should be equal"
+
+
+if __name__ == '__main__':
+    main()

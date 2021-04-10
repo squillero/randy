@@ -17,7 +17,7 @@ I guess these files will never be uploaded to PyPI: install locally with somethi
 
 ```shell
 $ git clone https://github.com/squillero/randy
-$ cd randyc
+$ cd randy
 $ python3 setup.py install
 ```
 
