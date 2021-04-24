@@ -7,5 +7,5 @@
 #   (----)    蛙飛び込む
 #  ( >__< )    水の音
 #
-# ( ! ) 2021 Giovanni Squillero. CC0 Public Domain.
+# ( ! ) 2021 Giovanni Squillero. Public Domain.
 # Project page: https://github.com/squillero/randy

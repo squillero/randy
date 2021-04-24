@@ -7,15 +7,10 @@
 #   (----)    蛙飛び込む
 #  ( >__< )    水の音
 #
-# ( ! ) 2021 Giovanni Squillero. CC0 Public Domain.
+# ( ! ) 2021 Giovanni Squillero. Public Domain.
 # Project page: https://github.com/squillero/randy
 
-# Randy is Public Domain
-# ======================
-# The code of randy have been dedicated to the public domain by the Author:
-# anyone is free to copy, modify, publish, use, compile, sell, or distribute
-# this software, either in source code form or as a compiled binary, for any
-# purpose, commercial or non-commercial, and by any means.
+"""A fiddling wrapper over serious random packages, tweaked for use in EAs."""
 
 __version__ = '0.3β'
 __author__ = 'Giovanni Squillero'
