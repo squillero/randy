@@ -5,12 +5,14 @@
 [![DOI](https://zenodo.org/badge/354226427.svg)](https://zenodo.org/badge/latestdoi/354226427)
 
 
-RANDY
-=====
+`randy`
+=======
 
 > **Notez bien**: Not to be confused with Francis Horsman's *randy* @ [https://pypi.org/project/randy/](https://pypi.org/project/randy/)
 
-A fiddling wrapper over NumPI's random package. The main purpose of *Randy* is to allow my EA applications to use a private, separate random generator, guaranteeing the reproducibility of the results. Plus a handful of functions I found useful over the years.
+A fiddling wrapper; its main is to allow my EA applications to use a private, separate random generator, guaranteeing the reproducibility of the results — plus a handful of functions I found useful over the years.
+
+
 
 Strength-based functions are straightforwardly based on [truncated normal distributions](https://en.wikipedia.org/wiki/Truncated_normal_distribution), see the SciPy docs on [scipy.stats.truncnorm](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.truncnorm.html).
 
