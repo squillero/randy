@@ -27,4 +27,6 @@ or simply move the sub-directory `randy` inside your project.
 Have fun. And wear a mask 😷.
 
 ### Randy is Public Domain  
-All of the code and documentation in *Randy* has been dedicated to the public domain by the [Author](https://github.com/squillero). Anyone is free to copy, modify, publish, use, compile, sell, or distribute this software, either in source code form or as a compiled binary, for any purpose, commercial or non-commercial, and by any means. See [LICENSE](/LICENSE) for more details.
+The code of `randy` have been dedicated to the [public domain](https://en.wikipedia.org/wiki/Public-domain_software) by the [Author](https://github.com/squillero): anyone is free to copy, modify, publish, use, compile, sell, or distribute this software, either in source code form or as a compiled binary, for any purpose, commercial or non-commercial, and by any means. 
+
+See [LICENSE](/LICENSE) for more details.
