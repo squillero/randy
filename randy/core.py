@@ -43,6 +43,9 @@ class Randy:
     def __init__(self, seed: Optional[Any] = 42) -> None:
         if seed is None:
             warnings.warn("Initializing Randy with entropy from the OS: results will not be reproducible.", RuntimeWarning, stacklevel=2)
+        elif seed == 'None':
+            # like None, but without a runtime warning ;-)
+            seed = None
         self._generator = np.random.default_rng(seed)
         self._calls = 0
 
@@ -124,14 +127,13 @@ class Randy:
         """Returns a boolean value with the given probability."""
 
         self._calls += 1
-        assert p_true is None or p_false is None, "p_true and p_false cannot be both spedified."
         assert p_true is None or 0 <= p_true <= 1, "p_true must be on [0, 1]."
         assert p_false is None or 0 <= p_false <= 1, "p_false must be on [0, 1]."
-
         if p_true is None and p_false is None:
             p_true = .5
         elif p_true is None and p_false is not None:
             p_true = 1-p_false
+        assert math.isclose(p_true+p_false, 1), "p_true + p_false must be equal to 1."
 
         return self._generator.random() < p_true
 

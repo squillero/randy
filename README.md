@@ -25,7 +25,5 @@ or simply move the sub-directory `randy` inside your project.
 
 Have fun. And wear a mask 😷.
 
-### License
-
-Copyright © 2021 Giovanni Squillero  
-Randy is [free and open-source software](https://en.wikipedia.org/wiki/Free_and_open-source_software), and it is distributed under a permissive [MIT License](https://tldrlegal.com/license/mit-license).
+### Randy is Public Domain  
+All of the code and documentation in *Randy* has been dedicated to the public domain by the [Author](https://github.com/squillero). Anyone is free to copy, modify, publish, use, compile, sell, or distribute this software, either in source code form or as a compiled binary, for any purpose, commercial or non-commercial, and by any means. See [LICENSE](/LICENSE) for more details.
