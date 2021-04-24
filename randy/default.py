@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-# ______________   ________   __
-# |____/|____|| \  ||    \ \_/
-# |R  \_|A   ||N \_||D___/  |Y
+# ______________   ______   __
+# |____/|____|| \  ||   \\_/
+# |R  \_|A   ||N \_||D__/ |Y
 #
 #    @..@    古池や
 #   (----)    蛙飛び込む
 #  ( >__< )    水の音
 #
-# ( ! ) 2021 Giovanni Squillero. CC0 Public Domain.
+# ( ! ) 2021 Giovanni Squillero. Public Domain.
 # Project page: https://github.com/squillero/randy
 
 __all__ = ['boolean', 'choice', 'random', 'sigma_choice', 'sigma_random', 'randint', 'shuffle']
@@ -16,7 +16,7 @@ import logging
 from .core import Randy
 
 try:
-    # Ok, I may admit that that's a little bit paranoid...
+    # Ok, I may admit it's a little bit paranoid...
     __the_ram
     assert False, f"Panik: Randy the Ram has already be initialized: {__the_ram!r}"
 except NameError:
@@ -64,3 +64,9 @@ def shuffle(*args, **kwargs):
     """Call shuffle with the default random generator."""
     logging.debug(f"Using the default Randy the Ram (ie. {__the_ram!r})")
     return __the_ram.shuffle(*args, **kwargs)
+
+
+def shuffled(*args, **kwargs):
+    """Call shuffled with the default random generator."""
+    logging.debug(f"Using the default Randy the Ram (ie. {__the_ram!r})")
+    return __the_ram.shuffled(*args, **kwargs)
