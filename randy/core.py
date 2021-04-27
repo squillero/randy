@@ -13,7 +13,6 @@
 from typing import Optional, Sequence, List, Any
 import warnings
 import math
-import logging
 import numpy as np
 from scipy.stats import truncnorm
 
@@ -41,8 +40,8 @@ class Randy:
         self._calls = 0
 
     def __str__(self) -> str:
-        descr = ', '.join(f"{a}={b!r}" for a, b in self._generator.__getstate__().items())
-        return f"Randy @ {hex(id(self))} (calls={self._calls}, {descr})"
+        description = ', '.join(f"{a}={b!r}" for a, b in self._generator.__getstate__().items())
+        return f"Randy @ {hex(id(self))} (calls={self._calls}, {description})"
 
     def __repr__(self) -> str:
         return f"Randy_{hex(id(self))[2:]}"
@@ -59,8 +58,8 @@ class Randy:
             val = Randy.SMALL_NUMBER
         return val
 
-    def sigma_random(self, a: float, b: float, loc: Optional[float] = None, strength: Optional[float] = None):
-        """Returns a value in [a, b] by perturbating loc with a given strength."""
+    def sigma_random(self, a: float, b: float, loc: Optional[float] = None, strength: Optional[float] = None) -> Any:
+        """Returns a value in [a, b] by perturbing loc with a given strength."""
         self._calls += 1
         assert a <= b, "a must precede b"
         assert strength is None or 0 <= strength <= 1, "strength must be in [0, 1]"
@@ -79,12 +78,12 @@ class Randy:
             val = truncnorm.rvs(clip_a, clip_b, loc=loc, scale=std, random_state=self._generator)
         return val
 
-    def random(self, a: Optional[float] = 0, b: Optional[float] = 1):
+    def random(self, a: Optional[float] = 0, b: Optional[float] = 1) -> float:
         """Returns a random value in [a, b], default is [0, 1]."""
         return self.sigma_random(a=a, b=b, loc=None, strength=None)
 
     def sigma_choice(self, seq: Sequence[Any], loc: Optional[int] = None, strength: Optional[float] = None) -> Any:
-        """Returns a random element from seq by perturbating index loc with a given strength."""
+        """Returns a random element from seq by perturbing index loc with a given strength."""
         self._calls += 1
         assert strength is None or 0 <= strength <= 1, "strength must be in [0, 1]"
         assert (loc is None and strength is None) or (
@@ -99,30 +98,39 @@ class Randy:
             i = self.sigma_random(0, len(seq) - Randy.SMALL_NUMBER, loc=loc + .5, strength=strength)
             return seq[int(i)]
 
-    def weighted_choice(self, seq: Sequence[Any], p: Sequence[float]):
+    def weighted_choice(self, seq: Sequence[Any], p: Sequence[float]) -> Any:
         """Returns a random element from seq using the probabilities in p."""
         assert len(seq) == len(p), "seq and weight must contain the same number of elements"
         assert math.isclose(sum(p), 1), "weights must sum to 1"
         r = self._generator.random()
-        return next(val for val, cp in ((v, sum(p[0:i+1])) for i, v in enumerate(seq)) if cp >= r)
+        return next(val for val, cp in ((v, sum(p[0:i + 1])) for i, v in enumerate(seq)) if cp >= r)
 
-    def choice(self, seq: Sequence[Any], p: Optional[float] = None):
-        """Returns a random element from seq, possibly using probabilities in p."""
-        if p is None:
-            return self._generator.choice(seq)
-        else:
+    def choice(self,
+               seq: Sequence[Any],
+               loc: Optional[int] = None,
+               strength: Optional[float] = None,
+               p: Optional[Sequence[float]] = None) -> Any:
+        """Returns a random element from seq, either using weighted_ or sigma_choice."""
+        if loc is not None and strength is not None:
+            assert p is None, "p cannot be specified with loc and strength"
+            return self.sigma_choice(seq, loc=loc, strength=strength)
+        elif p is not None:
+            assert loc is None and strength is None, "loc and strength cannot be specified with p"
             return self.weighted_choice(seq, p)
+        else:
+            assert loc is None and strength is None, "loc and strength should be specified together (either both or neither)"
+            return self._generator.choice(seq)
 
     def boolean(self, p_true: Optional[float] = None, p_false: Optional[float] = None):
         """Returns a boolean value with the given probability."""
         self._calls += 1
-        assert p_true is None or 0 <= p_true <= 1, "p_true must be on [0, 1]."
-        assert p_false is None or 0 <= p_false <= 1, "p_false must be on [0, 1]."
+        assert p_true is None or 0 <= p_true <= 1, "p_true must be on [0, 1]"
+        assert p_false is None or 0 <= p_false <= 1, "p_false must be on [0, 1]"
         if p_true is None and p_false is None:
             p_true = .5
         elif p_true is None and p_false is not None:
             p_true = 1 - p_false
-        assert math.isclose(p_true + p_false, 1), "p_true + p_false must be equal to 1."
+        assert math.isclose(p_true + p_false, 1), "p_true + p_false must be equal to 1"
         return self._generator.random() < p_true
 
     def randint(self, a, b):
@@ -135,7 +143,7 @@ class Randy:
         """Shuffle list x in place, and return None."""
         self._generator.shuffle(seq)
 
-    def shuffle(self, seq: Sequence[Any]) -> None:
+    def shuffled(self, seq: Sequence[Any]) -> List[Any]:
         """Returns a shuffled list with the element of seq."""
         y = list(seq)
         self.shuffle(y)
