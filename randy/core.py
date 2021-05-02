@@ -22,20 +22,19 @@ class Randy:
 
     SMALL_NUMBER = 1e-9
 
-    def __init__(self, seed: Optional[Any] = 42) -> None:
-        if seed is None:
+    __slots__ = ['_generator', '_calls']
+
+    def __getstate__(self):
+        return self._generator, self._calls
+
+    def __setstate__(self, state):
+        _generator, _calls = state
+
+    def __init__(self, seed: Optional[Any] = 42, croak: Optional[bool] = True) -> None:
+        if seed is None and croak:
             warnings.warn("Initializing Randy with entropy from the OS: results will not be reproducible.",
                           RuntimeWarning,
                           stacklevel=2)
-        elif seed == 'None':
-            # like None, but without a runtime warning ;-)
-            seed = None
-        self._generator = np.random.default_rng(seed)
-        self._calls = 0
-
-    def seed(self, seed: Any) -> None:
-        """Force a seed value to the internal generator"""
-        warnings.warn("Setting a seed is deprecated. Create a new RandomWrapper instead.", DeprecationWarning)
         self._generator = np.random.default_rng(seed)
         self._calls = 0
 
@@ -46,8 +45,11 @@ class Randy:
     def __repr__(self) -> str:
         return f"Randy_{hex(id(self))[2:]}"
 
+    def __bool__(self):
+        return self.boolean()
+
     @staticmethod
-    def _strength_to_sigma(strength: float):
+    def _strength_to_sigma(strength: float) -> float:
         """Stretches [0,1] on a standard deviation ]0, 20.8[."""
         assert 0 <= strength <= 1, "Invalid sigma (must be [0, 1])"
         x = strength / 2 + .5
@@ -121,19 +123,20 @@ class Randy:
             assert loc is None and strength is None, "loc and strength should be specified together (either both or neither)"
             return self._generator.choice(seq)
 
-    def boolean(self, p_true: Optional[float] = None, p_false: Optional[float] = None):
+    def boolean(self, p_true: Optional[float] = None, p_false: Optional[float] = None) -> bool:
         """Returns a boolean value with the given probability."""
         self._calls += 1
         assert p_true is None or 0 <= p_true <= 1, "p_true must be on [0, 1]"
         assert p_false is None or 0 <= p_false <= 1, "p_false must be on [0, 1]"
+        assert p_true is None or p_false is None or math.isclose(p_true + p_false,
+                                                                 1), "p_true + p_false must be equal to 1"
         if p_true is None and p_false is None:
             p_true = .5
         elif p_true is None and p_false is not None:
             p_true = 1 - p_false
-        assert math.isclose(p_true + p_false, 1), "p_true + p_false must be equal to 1"
         return self._generator.random() < p_true
 
-    def randint(self, a, b):
+    def randint(self, a, b) -> int:
         """Returns a random integer in [a, b]."""
         assert a <= b, "a must be <= b."
         r = self._generator.random() * (b - a + 1) + a
