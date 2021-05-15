@@ -16,7 +16,6 @@ __all__ = [
 
 import logging
 from typing import Optional, Any, Sequence, List, Callable
-import numpy as np
 from scipy.stats import truncnorm
 
 from .core import Randy
@@ -42,9 +41,9 @@ def get_rvs(a: float, b: float, loc: float, scale: float) -> Callable:
 # shortcuts
 
 def seed(new_seed: Optional[Any] = None) -> None:
+    """Restart default Randy wih the given seed"""
     global _default
-    _default = np.random.default_rng(new_seed)
-
+    _default = Randy(new_seed)
 
 def sigma_random(a: float, b: float, loc: Optional[float] = None, strength: Optional[float] = None) -> float:
     """Returns a value in [a, b] by perturbing loc with a given strength."""
