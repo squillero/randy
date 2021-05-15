@@ -64,17 +64,18 @@ class Randy:
 
     def sigma_random(self, a: float, b: float, loc: Optional[float] = None, strength: Optional[float] = None) -> float:
         """Returns a value in [a, b] by perturbing loc with a given strength."""
+        assert strength is None or 0 <= strength <= 1, "strength must be in [0, 1]"
         return self.scale_random(a, b, loc=loc, scale=Randy._strength_to_sigma(strength))
 
     def scale_random(self, a: float, b: float, loc: Optional[float] = None, scale: Optional[float] = None) -> float:
         """Returns a value from a standard normal truncated to [a, b] with mean loc and standard deviation scale."""
         self._calls += 1
         assert a <= b, "a must precede b"
-        assert scale is None or 0 <= scale <= 1, "strength must be in [0, 1]"
         assert (loc is None and scale is None) or (
                 loc is not None and
-                scale is not None), "loc and strength should be specified together (either both or neither)"
+                scale is not None), "loc and scale should be specified together (either both or neither)"
         assert loc is None or a <= loc <= b, "loc must be in [a, b]"
+        assert scale is None or scale >= 0, "scale must be positive"
         if scale is None:
             val = self._generator.random()
             val = val * (b - a) + a
