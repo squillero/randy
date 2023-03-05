@@ -7,17 +7,18 @@
 #   (----)    蛙飛び込む
 #  ( >__< )    水の音
 #
-# ( ! ) 2021 Giovanni Squillero. Public Domain.
-# Project page: https://github.com/squillero/randy
+# https://github.com/squillero/randy
+
+# Copyright 2023 Giovanni Squillero.
+# SPDX-License-Identifier: 0BSD
 
 """A fiddling wrapper over serious random packages, tweaked for use in EAs.
 
-( ! ) 2021 Giovanni Squillero. Public Domain.
+(c) 2023 Giovanni Squillero.  Distributed under 0BSD.
 Project page: https://github.com/squillero/randy
 """
 
-__version__ = '0.3β'
+__version__ = '0.4β'
 __author__ = 'Giovanni Squillero'
 
-#from sgx.randy.core import Randy
 from .default import *

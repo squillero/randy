@@ -4,7 +4,6 @@
 ![RELEASE](https://img.shields.io/github/v/release/squillero/randy?include_prereleases)
 [![DOI](https://zenodo.org/badge/354226427.svg)](https://zenodo.org/badge/latestdoi/354226427)
 
-
 `randy`
 =======
 
@@ -17,9 +16,9 @@ Strength-based functions are straightforwardly based on [truncated normal distri
 I guess these files will never be uploaded to PyPI: install locally with something like
 
 ```shell
-$ git clone https://github.com/squillero/randy
-$ cd randy
-$ python3 setup.py install
+git clone https://github.com/squillero/randy
+cd randy
+python3 setup.py install
 ```
 
 or simply move the sub-directory `randy` inside your project.
@@ -28,5 +27,5 @@ Have fun. And wear a mask 😷.
 
 #### License
 
-`randy` source code is in the [public domain](https://en.wikipedia.org/wiki/Public-domain_software) and is free to everyone to use for any purpose. 
-
+**Copyright © 2023 by Giovanni Squillero**  
+`randy` is distributed under a [Zero-Clause BSD License](https://tldrlegal.com/license/bsd-0-clause-license) (SPDX: [0BSD](https://spdx.org/licenses/0BSD.html)), which allows unlimited freedom without the requirement to include legal notices.
