@@ -128,3 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 /notebooks/Untitled*.ipynb
+
+# GX
+.idea/

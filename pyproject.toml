@@ -1,0 +1,67 @@
+# ______________   ______   __
+# |____/|____|| \  ||   \\_/
+# |R  \_|A   ||N \_||D__/ |Y
+#
+#    @..@    古池や
+#   (----)    蛙飛び込む
+#  ( >__< )    水の音
+
+# Copyright 2023 Giovanni Squillero.
+# SPDX-License-Identifier: 0BSD
+
+[project]
+authors = [{name = "Giovanni Squillero", email = "giovanni.squillero@polito.it"}]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Information Technology",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: BSD License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python",
+  "Topic :: Software Development :: Libraries",
+]
+dependencies = []
+description = "Minimalistic, unbalanced Binary Search Tree"
+keywords = ["Binary Search Tree", "Data Structures", "BST"]
+license = {"text" = "0BSD"}
+name = "pythonic-bst"
+readme = "README.md"
+requires-python = ">=3.7"
+version = "1.0.3"
+
+[project.urls]
+Homepage = "https://github.com/squillero/pythonic-bst"
+
+[project.optional-dependencies]
+dev = ["pytest", "Coverage.py", "bumpver"]
+
+[tool.yapf]
+based_on_style = "google"
+blank_line_before_module_docstring = true
+column_limit = 120
+
+[tool.black]
+exclude = "(^\\.|^__pycache__)"
+include = '\.ipynb'
+line-length = 120
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.bumpver]
+commit = true
+commit_message = "Bump version from {old_version} to {new_version}"
+current_version = "1.0.3"
+push = true
+tag = true
+version_pattern = "MAJOR.MINOR.PATCH"
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = ['current_version = "{version}"', 'version = "{version}"']
+"src/bst/__init__.py" = ["__version__ = '{version}'"]
+
+[tool.coverage.run]
+branch = true
+
+[tool.coverage.report]
+omit = ['tests/*']

@@ -7,8 +7,10 @@
 #   (----)    蛙飛び込む
 #  ( >__< )    水の音
 #
-# ( ! ) 2021 Giovanni Squillero. Public Domain.
-# Project page: https://github.com/squillero/randy
+# https://github.com/squillero/randy
+
+# Copyright 2023 Giovanni Squillero.
+# SPDX-License-Identifier: 0BSD
 
 import math
 import warnings
